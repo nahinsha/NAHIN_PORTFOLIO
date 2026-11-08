@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme tokens (RGB triplets so Tailwind opacity modifiers work).
+   Dark is the default; Light is applied via the `light` class on <html>. */
+:root {
+  --canvas: 13 17 23;      /* background: ager moto bluish dark (#0D1117) */
+  --surface: 22 28 38;     /* card / code box */
+  --line: 38 47 60;        /* border / divider */
+  --fg: 238 242 246;       /* main text (khub spasto) */
+  --muted: 170 180 195;    /* halka text, age-r cheye beshi bojha jabe */
+  --subtle: 125 136 152;   /* number / chhoto label */
+  --accent: 239 179 90;    /* ager amber color (#EFB35A) */
+  --accent-ink: 10 13 18;  /* amber button-er upor text */
+}
+
+html.light {
+  --canvas: 245 242 235;
+  --surface: 252 250 246;
+  --line: 222 217 206;
+  --fg: 26 25 22;
+  --muted: 92 89 82;
+  --subtle: 120 116 108;
+  --accent: 201 70 14;
+  --accent-ink: 255 255 255;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-synthesis: none;
+}
+
+body {
+  @apply bg-canvas text-fg font-sans antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: rgb(var(--accent) / 0.28);
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reveal-on-scroll, driven by IntersectionObserver (useScrollReveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--canvas));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--line));
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
